@@ -15,7 +15,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { useRouter } from 'expo-router';
+
 export default function HausTap() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [month, setMonth] = useState("");
@@ -355,7 +358,10 @@ const generateNewOtp = async () => {
 
             <View style={styles.line} />
 
-            <TouchableOpacity style={styles.buttonAlt}>
+            <TouchableOpacity 
+              style={styles.buttonAlt}
+              onPress={() => router.push('/partner')}
+            >
               <Text style={styles.buttonText}>Become a HausTap Partner</Text>
             </TouchableOpacity>
           </View>
@@ -503,8 +509,19 @@ const generateNewOtp = async () => {
       <Modal visible={showEmailVerification} animationType="slide">
         <SafeAreaView style={styles.modalContainer}>
           <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+          {/* Header with back button */}
+          <View style={styles.modalHeader}>
+            <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={() => setShowEmailVerification(false)}
+            >
+              <Ionicons name="arrow-back" size={24} color="#666" />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Email Verification</Text>
+            {/* placeholder to balance header layout */}
+            <View style={{ width: 40 }} />
+          </View>
           <View style={[styles.modalContent, { alignItems: 'center', padding: 20 }]}>
-            <Text style={[styles.modalTitle, { marginBottom: 20 }]}>Email Verification</Text>
             <Text style={[styles.modalText, { textAlign: 'center', marginBottom: 20 }]}>
               We have sent a One-Time Password (OTP) to your registered email address.
               Please enter the code below to verify your email.
